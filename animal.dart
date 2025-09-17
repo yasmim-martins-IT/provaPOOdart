@@ -1,32 +1,59 @@
 import 'dart:io';
 
+// ==========================
+// Classe base (com encapsulamento)
+// ==========================
 class Animal {
-  String nome;
-  String especie;
-  String porte;
+  String _nome;
+  String _especie;
+  String _porte; // pequeno, médio ou grande
 
-  Animal(this.nome, this.especie, this.porte);
+  // Construtor
+  Animal(this._nome, this._especie, this._porte);
+
+  // Getters
+  String get nome => _nome;
+  String get especie => _especie;
+  String get porte => _porte;
+
+  // Setters (com validação)
+  set nome(String novoNome) {
+    if (novoNome.isNotEmpty) {
+      _nome = novoNome;
+    } else {
+      print("Nome inválido!");
+    }
+  }
+
+  set porte(String novoPorte) {
+    if (["pequeno", "médio", "grande"].contains(novoPorte)) {
+      _porte = novoPorte;
+    } else {
+      print("Porte inválido!");
+    }
+  }
 
   void emitirSom() {
-    print("$nome está emitindo um som.");
+    print("$_nome está emitindo um som genérico.");
   }
 
   void alimentar() {
-    print("$nome está se alimentando.");
+    print("$_nome está se alimentando.");
   }
 
   @override
   String toString() {
-    return "Nome: $nome | Espécie: $especie | Porte: $porte";
+    return "Nome: $_nome | Espécie: $_especie | Porte: $_porte";
   }
 }
+
 
 class Leao extends Animal {
   Leao(String nome, String porte) : super(nome, "Leão", porte);
 
   @override
   void emitirSom() {
-    print("raaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaawr");
+    print("$nome : Rooooaaaarrr! 🦁");
   }
 }
 
@@ -35,33 +62,24 @@ class Elefante extends Animal {
 
   @override
   void emitirSom() {
-    print("pruuuuuuuuuuuuh  (som de elefante)");
+    print("$nome : Prrrhhhuuuuuuuuuu! ");
   }
 }
 
 class Passaro extends Animal {
-  Passaro(String nome, String porte) : super(nome, "Passaro", porte);
+  Passaro(String nome, String porte) : super(nome, "Pássaro", porte);
 
   @override
   void emitirSom() {
-    print("piu piu piu piu piu");
-  }
-}
-
-class Cobra extends Animal {
-  Cobra(String nome, String porte) : super(nome, "Cobra", porte);
-
-  @override
-  void emitirSom() {
-    print('shiu shiu shiuuuu');
+    print("$nome : Piu piu! ");
   }
 }
 
 class Macaco extends Animal {
-  Macaco(String nome, String porte) : super(nome, 'Macaco', porte);
+  Macaco(String nome, String porte) : super(nome, "Macaco", porte);
 
   @override
   void emitirSom() {
-    print('UH UH AH AH AH'); 
+    print("$nome : Uh uh ah ah! ");
   }
 }

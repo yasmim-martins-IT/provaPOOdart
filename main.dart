@@ -11,6 +11,7 @@ void main() {
     print("3 - Editar animal");
     print("4 - Remover animal");
     print("5 - Filtrar animais por porte");
+    print("6- Ouvir o som do animal");
     print("0 - Sair");
 
     String? opcao = stdin.readLineSync();
@@ -31,6 +32,20 @@ void main() {
       case "5":
         filtrarAnimais(animais);
         break;
+      case "6":
+        listarAnimais(animais);
+        print("Escolha o índice de um dos animais disponíveis: ");
+        int? indice = int.tryParse(stdin.readLineSync() ?? "");
+
+        if (indice == null || indice < 0 || indice >= animais.length) {
+          print(" indice inválido!");
+        } else {
+          Animal escolhido = animais[indice];
+
+          escolhido.emitirSom(); 
+        }
+        break;
+
       case "0":
         print("Saindo do sistema...");
         return;
@@ -40,15 +55,14 @@ void main() {
   }
 }
 
-
 void cadastrarAnimal(List<Animal> animais) {
   print("Digite o nome do animal:");
   String? nome = stdin.readLineSync();
 
-  print("Escolha a espécie: 1-Leão  2-Elefante  3-Pássaro");
+  print("Escolha a espécie: 1-Leão  2-Elefante  3-Pássaro  4-Macaco");
   String? escolha = stdin.readLineSync();
 
-  print("Digite o porte (pequeno, médio, grande):");
+  print("Digite o porte (pequeno, medio, grande):");
   String? porte = stdin.readLineSync();
 
   Animal novo;
@@ -62,12 +76,15 @@ void cadastrarAnimal(List<Animal> animais) {
     case "3":
       novo = Passaro(nome ?? "Sem nome", porte ?? "pequeno");
       break;
+    case "4":
+      novo = Macaco(nome ?? "Sem nome", porte ?? "médio");
+      break;
     default:
       print("Espécie inválida!");
       return;
   }
   animais.add(novo);
-  print("Animal cadastrado com sucesso!");
+  print(" Animal cadastrado com sucesso!");
 }
 
 void listarAnimais(List<Animal> animais) {
@@ -98,7 +115,7 @@ void editarAnimal(List<Animal> animais) {
   String? novoPorte = stdin.readLineSync();
   animais[index].porte = novoPorte ?? animais[index].porte;
 
-  print("Animal atualizado com sucesso!");
+  print(" Animal atualizado com sucesso!");
 }
 
 void removerAnimal(List<Animal> animais) {
@@ -116,7 +133,7 @@ void removerAnimal(List<Animal> animais) {
 }
 
 void filtrarAnimais(List<Animal> animais) {
-  print("Digite o porte para filtrar (pequeno, médio, grande):");
+  print("Digite o porte para filtrar (pequeno, medio, grande):");
   String? porte = stdin.readLineSync();
 
   var filtrados = animais.where((a) => a.porte == porte).toList();
